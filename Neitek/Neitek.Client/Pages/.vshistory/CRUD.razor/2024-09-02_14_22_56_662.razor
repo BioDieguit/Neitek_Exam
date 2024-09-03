@@ -1,0 +1,676 @@
+﻿@page "/CRUD"
+@inject IMetasService MetasService
+@inject ITareasService TareasService
+@inject NavigationManager NavigationManager
+@rendermode InteractiveAuto
+@inject IStringLocalizer<CRUD> L
+
+<style>
+    .btn-icon-like
+    {
+        background-color: seagreen;
+        color:white;
+        font-size: 15px;
+    }
+
+    .TamañoAdicion
+    {
+        width:400px;
+    }
+
+    .TamañoGrilla
+    {
+        margin-left: 20px;
+        width: 1200px;
+    }
+
+    .TamañoLetra
+    {
+       font-size: small;
+    }
+
+    .WrapText{
+        border: none;
+        word-wrap: break-word;
+    }
+
+    .header-align-center span:first-child {
+        width: 100%;
+        text-align: center;
+    }
+
+    #HoverDiv:hover, #HoverDiv:focus {
+        background-color: lightgray;
+    }
+
+
+    /* Set the Font Awesome family and weight for custom checkbox icons */
+    .custom-icons.k-checkbox:before {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+    }
+
+    /* Remove the default background image for checked state */
+    .custom-icons.k-checkbox:checked {
+        background-image: none;
+    }
+
+        /* Set the Font Awesome check mark icon for the checked state */
+        .custom-icons.k-checkbox:checked:before {
+            content: "\f058"; /* Check Circle icon */
+        }
+
+    /* Remove the default background image for indeterminate state */
+    .custom-icons.k-checkbox:indeterminate {
+        background-image: none;
+    }
+
+        /* Set the Font Awesome question icon for the indeterminate state */
+        .custom-icons.k-checkbox:indeterminate:before {
+            content: "\3f"; /* Question icon */
+            margin-left: 3px;
+        }
+
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+
+<div class="d-flex">
+    <div class="TamañoAdicion">
+       <div class="card p-2">
+
+            <DxFormLayout Enabled="false" ItemSizeMode="SizeMode.Small">
+                <DxFormLayoutGroup ColSpanXl="12" ColSpanLg="12" ColSpanMd="12" ColSpanSm="12" ColSpanXs="12" Decoration="FormLayoutGroupDecoration.None">
+                    <DxFormLayoutItem ColSpanXl="6" ColSpanLg="4" ColSpanMd="4" ColSpanSm="4" ColSpanXs="4">
+                        <DxButton Text="+ Nueva Meta"
+                                  RenderStyle="ButtonRenderStyle.Info"
+                                  Click="@MostrarPopRegistrarMetas"
+                                  CssClass="btn-icon-like">
+                        </DxButton>
+                    </DxFormLayoutItem>
+                </DxFormLayoutGroup>
+                @foreach (var pendiente in Metas)
+                {
+                    <div class="card-body" id="HoverDiv" tabindex="0" @onclick="()=>BuscarNuevasTareas(pendiente.Meta_Id)">
+                        <DxFormLayoutGroup ColSpanXl="12" ColSpanLg="12" ColSpanMd="12" ColSpanSm="12" ColSpanXs="12" CssClass="bg-light" Decoration="FormLayoutGroupDecoration.None">
+                            @*Texto de la descripcion de la meta*@
+                            <DxFormLayoutItem CaptionCssClass="WrapText" ColSpanXl="8" ColSpanLg="4" ColSpanMd="4" ColSpanSm="4" ColSpanXs="4" >
+                                <span class="WrapText">@pendiente.Meta_Dsc</span>
+                                </DxFormLayoutItem>
+                            @*Barra de consulta para implementar los botones de modificar y eliminar*@
+                            <DxFormLayoutItem Id="@pendiente.Meta_Id.ToString()" ColSpanXl="1" ColSpanLg="4" ColSpanMd="4" ColSpanSm="4" ColSpanXs="4">
+                                <BarraOperacionesMetas AccionMeta="MostrarPopAccionMetas" />
+                            </DxFormLayoutItem>
+                            @*Texto de la fecha creada*@
+                            <span class="TamañoLetra">Fecha creada: @pendiente.Fecha_Alta.ToString("dd/MM/yyyy")</span>
+                            @*Barra de progreso*@
+                            <DxProgressBar Minimum="0" Maximum="100" Position="@pendiente.Progreso" />
+                        </DxFormLayoutGroup>
+                    </div>
+                }
+            </DxFormLayout>
+       </div>
+     </div>
+
+   @*Barra de consulta de los botones de tareas*@
+    <div class="TamañoGrilla">
+        <div class="card-body">
+            <DxFormLayout Data="@TareaSeleccionada" Enabled="false" ItemSizeMode="SizeMode.Small">
+                <DxFormLayoutGroup ColSpanXl="12" ColSpanLg="12" ColSpanMd="12" ColSpanSm="12" ColSpanXs="12" Decoration="FormLayoutGroupDecoration.None">
+                    <DxFormLayoutItem ColSpanXl="12" ColSpanLg="4" ColSpanMd="4" ColSpanSm="4" ColSpanXs="4">
+                        <BarraOperacionesTareas AccionTarea="MostrarPopAccionTareas"
+                                                VisibleCompletar="@VisibleCompletar"
+                                                VisibleEliminar="@VisibleEliminar"
+                                                VisibleModificar="@VisibleModificar"
+                                                VisibleRegistrar="@VisibleRegistrar"
+                                                EnabledCompletar="@EnabledCompletar" />
+                    </DxFormLayoutItem>
+                </DxFormLayoutGroup>
+                </DxFormLayout>
+        </div>
+        <div class="grid-container">
+            <DxGrid @ref="Grid"
+                    @bind-SelectedDataItem="@SelectedDataItem"
+                    Data="@Tareas"
+                    SelectionMode="GridSelectionMode.Single"
+                    AllowSelectRowByClick="true"
+                    ColumnResizeMode="GridColumnResizeMode.ColumnsContainer"                   
+                    CssClass="header-align-center"
+                    PageSize="5">
+                <Columns>
+                    <DxGridDataColumn Caption=" "                                      
+                                      FieldName="Estado_Id"
+                                      MinWidth="70" >                        
+                        <CellDisplayTemplate>                           
+                              <DxCheckBox Checked="@((bool)context.Value)" Enabled="false" />
+                        </CellDisplayTemplate>
+                    </DxGridDataColumn>
+                    <DxGridDataColumn Caption=@L["Importancia"]
+                                      FieldName="Importancia"
+                                      MinWidth="70">
+                        <CellDisplayTemplate>
+                            <DxCheckBox Checked="@((bool)context.Value)" CheckedChanged="(bool e) => Importancia(e)" Enabled="true" />
+                        </CellDisplayTemplate>
+                    </DxGridDataColumn>
+                    <DxGridDataColumn Caption=@L["Tarea_Id"]
+                                      FieldName="Tarea_Id" 
+                                      MinWidth="450" />
+                    <DxGridDataColumn Caption="Fecha"
+                                      FieldName=@L["Fecha_Alta"] 
+                                      TextAlignment="GridTextAlignment.Center"
+                                      DisplayFormat="dd/MM/yyyy"
+                                      MinWidth="70" />
+                    <DxGridDataColumn Caption="Estado"
+                                      FieldName=@L["Estado_Id"] 
+                                      MinWidth="70">
+                        <CellDisplayTemplate>
+                            @switch (context.Value)
+                            {
+                                case false:
+                                    <span>Abierta</span>
+                                break;
+                                case true:
+                                    <span style="color: limegreen">Completada</span>
+                                break;
+                            }
+                        </CellDisplayTemplate>
+                    </DxGridDataColumn>
+                </Columns>
+            </DxGrid>
+        </div>
+    </div>
+    
+</div>
+
+<PopWindow IsVisiblePopUp="@IsVisiblePop"
+           Titulo="@TituloPop"
+           PopIdAccion="@PopIdAccion"
+           TextoAccionPop="@TextoAccionPop"
+           MetaEliminar="EliminarMeta"
+           TareaEliminar="EliminarTarea"
+           RegistrarNuevaMeta="RegistrarMeta"
+           RegistrarNuevaTarea="RegistrarTarea"
+           ModificarMeta="ModificarMeta"
+           ModificarTarea="ModificarTarea"
+           OnClosed="OcultarPop"
+           CerraVentana="OcultarPop" />
+
+@code {
+    public virtual List<Metas> Metas { get; set; }
+    public List<Tareas> Tareas { get; set; }
+    public Tareas TareaSeleccionada { get; set; }
+    public short MetaIdGlobal { get; set; }
+   
+    // Variables para la Pop que realiza acciones para las metas y tareas
+    public string TituloPop { get;  set; }
+    public string TextoAccionPop { get; set; }
+    public string PopIdAccion { get; set; }
+    public string BifurcacionPop { get; set; }
+    public bool IsVisiblePop { get; set; }
+
+    // Variables para que los botones de registrar tareas sean visibles
+    public bool VisibleRegistrar { get; set; }
+    public bool VisibleModificar { get; set; }
+    public bool VisibleEliminar { get; set; }
+    public bool VisibleCompletar { get; set; }
+    public bool EnabledCompletar { get; set; }
+
+    IGrid Grid { get; set; }
+   
+    // Objeto que funciona para guardar los datos de la fila que se esta seleccionando de la grilla de Tareas
+    public object SelectedDataItem 
+    {
+        get { return TareaSeleccionada; }
+        set
+        {
+            TareaSeleccionada = (Tareas)value;
+            EnabledCompletar = TareaSeleccionada.Estado_Id ? false : true;
+        }
+    }
+
+    /// <summary>
+    /// Override a la función de "OnInitializedAsync" para inicializar las variables, ademas de llamar los registros de "Metas" 
+    /// y "Tareas" de la base dae datos
+    /// <list type="bullet">
+    /// <item>Diego Rodriguez Corona - 02/07/2024 Creación de función</item>
+    /// </list>
+    /// </summary>
+    /// <remarks> Cuando se obtienen los registros de las metas se posiciona en el primer resultado </remarks>
+    protected override async Task OnInitializedAsync()
+    {
+        InicializaPropiedades();
+        string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+        var metas = await MetasService.All(absoluteUri);
+        Metas = metas.data.ToList();
+        if(Metas.Count() > 0)
+        {
+            MetaIdGlobal = Metas.FirstOrDefault(new Metas()).Meta_Id;
+            VisibleRegistrar = true;
+
+            var tareas = await TareasService.All(Metas.FirstOrDefault(new Metas()).Meta_Id, absoluteUri);
+
+            if(tareas.data is not null)
+            {
+                Tareas = tareas.data.ToList();
+                TareaSeleccionada = Tareas.FirstOrDefault(new Tareas());
+                VisibleCompletar = true;
+                VisibleModificar= true;
+                VisibleEliminar = true;
+                EnabledCompletar = TareaSeleccionada.Estado_Id ? false : true;
+            }
+        }   
+    }
+
+    /// <summary>
+    /// Función para setear el estado inicial de las variables que se utilizaran
+    /// <list type="bullet">
+    /// <item>Diego Rodriguez Corona - 02/07/2024 Creación de función</item>
+    /// </list>
+    /// </summary>
+    private void InicializaPropiedades()
+    {
+        Metas = new List<Metas>();
+        Tareas = new List<Tareas>();
+        TareaSeleccionada = new();
+        VisibleRegistrar = false;
+        VisibleCompletar = false;
+        VisibleModificar = false;
+        VisibleEliminar = false;    
+        IsVisiblePop = false;
+        TextoAccionPop = string.Empty;
+        TituloPop = string.Empty;       
+    }
+
+    /// <summary>
+    /// Función para desplegar la Pop-window cuando se da click enel boton de R
+    /// <list type="bullet">
+    /// <item>Diego Rodriguez Corona - 02/07/2024 Creación de función</item>
+    /// </list>
+    /// </summary>
+    public void MostrarPopRegistrarMetas(MouseEventArgs args)
+    {
+        PopIdAccion = L["Accion_Registrar"];
+        TituloPop = L["Agregar_Meta"];
+        BifurcacionPop = L["Metas"];
+        TextoAccionPop = string.Empty;
+        IsVisiblePop = true;
+    }
+
+    public void MostrarPopAccionMetas(string accion)
+    {
+        if (accion.Equals(L["Accion_Eliminar"]))
+        {
+            PopIdAccion = L["Accion_Eliminar"];
+            TituloPop = L["Comfirmar_Accion"];
+        }
+        else // Ya que solo esta la accion de eliminar y modificar, si no es eliminar por default es modificar
+        {
+            PopIdAccion = L["Accion_Modificar"];
+            TituloPop = L["Editar_Meta"];
+        }
+
+        BifurcacionPop = L["Metas"];
+        TextoAccionPop = RedimensionarCadena(Metas.Where(x => x.Meta_Id == MetaIdGlobal).FirstOrDefault(new Metas()).Meta_Dsc);
+        IsVisiblePop = true;
+    }
+
+    public async Task RegistrarMeta(string nuevaMeta)
+    {
+        try
+        {
+            nuevaMeta = RedimensionarCadena(nuevaMeta);
+
+            string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+            Metas registroNuevo = new Metas() { Meta_Dsc = nuevaMeta, Progreso = 0, Fecha_Alta = DateTime.Now };
+            var insercion = await MetasService.Add(absoluteUri, registroNuevo);
+            if (!insercion.success)
+            {
+                Console.WriteLine(insercion.data.TipoMensaje);
+            }
+            else
+            {
+                var result = await MetasService.All(absoluteUri);
+                Metas = result.data.ToList();
+                MetaIdGlobal = Metas.LastOrDefault(new Metas()).Meta_Id;
+                Tareas = new();
+                TareaSeleccionada = new();
+                VisibleRegistrar = true;
+                VisibleCompletar = false;
+                VisibleModificar = false;
+                VisibleEliminar = false;
+                StateHasChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            var prueba = e.Message;
+        }
+
+        IsVisiblePop = false;
+    } 
+
+    public async Task ModificarMeta(string nuevaMeta)
+    {
+        try
+        {
+            nuevaMeta = RedimensionarCadena(nuevaMeta);
+            string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+            Metas registroModificado = new Metas() { Meta_Id = Convert.ToInt16(MetaIdGlobal), Meta_Dsc = nuevaMeta };
+            var modificacion = await MetasService.Update(absoluteUri, registroModificado);
+            if (!modificacion.success)
+            {
+                Console.WriteLine("Fallo");
+            }
+            else
+            {
+                var result = await MetasService.All(absoluteUri);
+                Metas = result.data.ToList();
+                StateHasChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            var prueba = e.Message;
+        }
+
+        IsVisiblePop = false;
+    }
+
+    public async Task EliminarMeta()
+    {
+        try
+        {
+            string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+            var eliminar = await MetasService.Delete(absoluteUri, MetaIdGlobal);
+            if (!eliminar.success)
+            {
+                Console.WriteLine("Fallo");
+            }
+            else
+            {
+                // Como se elimina la meta, se eliminan todas las tareas asociadas a esta
+                var eliminarTareas = await TareasService.DeleteAll(absoluteUri, MetaIdGlobal);
+                // Se vuelven a buscar las metas existentes
+                var metas = await MetasService.All(absoluteUri);
+                // Si existen metas se vuelven a enlistar si no solo se crea una nueva lista en blanco
+                if (metas.data is not null)
+                {
+                    Metas = metas.data.ToList();
+                    MetaIdGlobal = Metas.FirstOrDefault(new Metas()).Meta_Id;
+                    // Se buscan las tareas asociadas a la primer meta que se regreso
+                    var tareas = await TareasService.All(Metas.FirstOrDefault(new Metas()).Meta_Id, absoluteUri);
+                    // Si existen tareas asociadas a la primer meta se enlistan si no, se crea una nueva lista
+                    if (tareas.data is not null)
+                    {
+                        Tareas = tareas.data.ToList();
+                        TareaSeleccionada = Tareas.FirstOrDefault(new Tareas());
+                        EnabledCompletar = TareaSeleccionada.Estado_Id ? false : true;
+                        VisibleRegistrar = true;
+                        VisibleCompletar = true;
+                        VisibleEliminar = true;                        
+                        VisibleModificar = true;
+                    }
+                    else
+                    {
+                        Tareas = new List<Tareas>();
+                        VisibleRegistrar = true;
+                        VisibleCompletar = false;
+                        VisibleEliminar = false;                        
+                        VisibleModificar = false;
+                    }
+                }
+                else
+                {
+                    Tareas = new ();
+                    TareaSeleccionada = new();
+                    VisibleRegistrar = false;
+                    VisibleCompletar = false;
+                    VisibleEliminar = false;                    
+                    VisibleModificar = false;
+                }
+                StateHasChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            var prueba = e.Message;
+        }
+
+        IsVisiblePop = false;
+    } 
+
+
+
+    public string RedimensionarCadena(string cadena)
+    {
+        string[] words = cadena.Split(" ").Where(x => x != string.Empty).ToArray();
+        return string.Join(" ", words);
+    }
+
+    public void OcultarPop()
+    {
+        TextoAccionPop = string.Empty;
+        TituloPop = string.Empty;
+        BifurcacionPop = string.Empty;
+        IsVisiblePop = false;
+        IsVisiblePop = false;
+    }
+
+
+    public async Task BuscarNuevasTareas(short id)
+    {
+        MetaIdGlobal = id;
+        string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+        var tareas = await TareasService.All(id, absoluteUri);
+        if (tareas.data is not null) // Bifurcacion en caso de que se haya agregado una nueva meta pero al ser nueva no tiene tareas todavia
+        {
+            Tareas = tareas.data.ToList();
+            TareaSeleccionada = Tareas.FirstOrDefault(new Tareas());
+            EnabledCompletar = TareaSeleccionada.Estado_Id ? false : true;
+            VisibleRegistrar = true;
+            VisibleCompletar = true;
+            VisibleEliminar = true;            
+            VisibleModificar = true;
+        }
+        else
+        {
+            Tareas = new List<Tareas>();
+            VisibleRegistrar = true;
+            VisibleCompletar = false;
+            VisibleEliminar = false;            
+            VisibleModificar = false;
+        }
+    }
+
+    public async void MostrarPopAccionTareas(string accion)
+    {
+        BifurcacionPop = L["Tareas"];
+
+        switch (accion)
+        {
+            case "Registrar": // Agregar
+                PopIdAccion = L["Accion_Registrar"];
+                TituloPop = L["Agregar_tarea"];
+                TextoAccionPop = string.Empty;
+                IsVisiblePop = true;
+                break;
+            case "Completar": // Completar
+                await CompletarTarea();
+                break;
+            case "Modificar": // Editar
+                PopIdAccion = L["Accion_Modificar"];
+                TituloPop = L["Modificar_tarea"];
+                TextoAccionPop = TareaSeleccionada.Tarea_Id;
+                IsVisiblePop = true;
+                break;
+            case "Eliminar": // Eliminar
+                PopIdAccion = L["Accion_Eliminar"];
+                TituloPop = L["Comfirmar_Accion"];
+                TextoAccionPop = TareaSeleccionada.Tarea_Id;
+                IsVisiblePop = true;
+            break;
+        }
+    }
+
+    public async Task RegistrarTarea(string nuevaTarea)
+    {
+        try
+        {            
+            nuevaTarea = RedimensionarCadena(nuevaTarea);
+
+            string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+            Tareas registroNuevo = new Tareas() { Tarea_Id = nuevaTarea, Fecha_Alta = DateTime.Now, Meta_Id = MetaIdGlobal };
+            var insercion = await TareasService.Add(absoluteUri, registroNuevo);
+            if (!insercion.success)
+            {
+                Console.WriteLine(insercion.data.TipoMensaje);
+            }
+            else
+            {
+                var tareas = await TareasService.All(MetaIdGlobal, absoluteUri);
+                Tareas = tareas.data.ToList();
+                TareaSeleccionada = Tareas.FirstOrDefault(new Tareas());
+                EnabledCompletar = true;
+                VisibleCompletar = true;
+                VisibleEliminar = true;
+                VisibleRegistrar = true;
+                VisibleModificar = true;
+                StateHasChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            var prueba = e.Message;
+        }
+
+        IsVisiblePop = false;
+    }
+
+    public async Task ModificarTarea(string nuevaTarea)
+    {
+        try
+        {
+            nuevaTarea = RedimensionarCadena(nuevaTarea);
+
+            string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+            Tareas registroNuevo = new Tareas() { Tarea_Id = nuevaTarea, Fecha_Alta = DateTime.Now, Meta_Id = MetaIdGlobal };
+            var modificacion = await TareasService.Update(absoluteUri, [TareaSeleccionada, registroNuevo]);
+            if (!modificacion.success)
+            {
+                Console.WriteLine(modificacion.data.TipoMensaje);
+            }
+            else
+            {
+                var tareas = await TareasService.All(MetaIdGlobal, absoluteUri);
+                Tareas = tareas.data.ToList();
+                TareaSeleccionada = Tareas.FirstOrDefault(new Tareas());
+                EnabledCompletar = TareaSeleccionada.Estado_Id ? false : true;
+                StateHasChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            var prueba = e.Message;
+        }
+
+        IsVisiblePop = false;
+    }
+
+    public async Task CompletarTarea()
+    {
+        try
+        {
+            Tareas registroPrevio = new();
+            registroPrevio = TareaSeleccionada;
+            if (TareaSeleccionada.Estado_Id) return; /// Condicionante para evitar que si una tarea seleccionada ya esta completada siga actualizando la DB
+
+            string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+            Tareas registroNuevo = new Tareas() { Tarea_Id = TareaSeleccionada.Tarea_Id, Fecha_Alta = DateTime.Now, Meta_Id = MetaIdGlobal };
+            var completar = await TareasService.Complete(absoluteUri, registroNuevo);
+            if (!completar.success)
+            {
+                Console.WriteLine(completar.data.TipoMensaje);
+            }
+            else
+            {
+                var tareas = await TareasService.All(MetaIdGlobal, absoluteUri);
+                Tareas = tareas.data.ToList();
+                TareaSeleccionada = Tareas.Where(x=> x.Tarea_Id.Equals(registroPrevio.Tarea_Id)).FirstOrDefault(new Tareas());
+                EnabledCompletar = false;                
+                StateHasChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            var prueba = e.Message;
+        }
+    }
+
+    public async Task Importancia(bool important)
+    {
+        TareaSeleccionada.Importancia = important;
+
+        try
+        {
+            if (TareaSeleccionada.Estado_Id) return; /// Condicionante para evitar que si una tarea seleccionada ya esta completada siga actualizando la DB
+
+            string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+            Tareas registroNuevo = new Tareas() { Tarea_Id = TareaSeleccionada.Tarea_Id, Fecha_Alta = DateTime.Now, Meta_Id = MetaIdGlobal, Importancia = TareaSeleccionada.Importancia };
+            var completar = await TareasService.Importancia(absoluteUri, registroNuevo);
+            if (!completar.success)
+            {
+                Console.WriteLine(completar.data.TipoMensaje);
+            }
+        }
+        catch (Exception e)
+        {
+            var prueba = e.Message;
+        }
+        StateHasChanged();
+    }
+
+    public async Task EliminarTarea()
+    {
+        try
+        {
+            string absoluteUri = NavigationManager.ToAbsoluteUri("/").AbsoluteUri;
+            var eliminar = await TareasService.DeleteOne(absoluteUri, TareaSeleccionada.Tarea_Id, TareaSeleccionada.Meta_Id);
+            if (!eliminar.success)
+            {
+                Console.WriteLine("Fallo");
+            }
+            else
+            {
+                var result = await TareasService.All(MetaIdGlobal, absoluteUri);
+
+                if(result.data is null)
+                {
+                    Tareas = new List<Tareas>();
+                    VisibleRegistrar = true;
+                    VisibleCompletar = false;
+                    VisibleEliminar = false;                  
+                    VisibleModificar = false;
+                }
+                else
+                {
+                    Tareas = result.data.ToList();
+                    TareaSeleccionada = Tareas.FirstOrDefault(new Tareas());
+                    EnabledCompletar = TareaSeleccionada.Estado_Id ? false : true;
+                    VisibleRegistrar = true;
+                    VisibleCompletar = true;
+                    VisibleEliminar = true;
+                    VisibleModificar = true;
+                }               
+                StateHasChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            var prueba = e.Message;
+        }
+
+        IsVisiblePop = false;
+    }
+}
+        

@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Compuesta" xml:space="preserve">
+    <value>Compuesta</value>
+    <comment>Valor CheckBox</comment>
+  </data>
+  <data name="Error_ACFF_2_Controller" xml:space="preserve">
+    <value>No se realizó la asignación de la cartera de fondo de fondos compuesta</value>
+    <comment>Mensaje AsignaCarteraFondosFondos</comment>
+  </data>
+  <data name="Error_ACFF_Controller" xml:space="preserve">
+    <value>No se realizó la asignación de la cartera de fondo de fondos</value>
+    <comment>Mensaje AsignaCarteraFondosFondos</comment>
+  </data>
+  <data name="Error_ACOF_Controller" xml:space="preserve">
+    <value>No se realizó la asignación de ordenes de contratos operativos de los fondos</value>
+    <comment>Mensaje AsignacionContOperFondos</comment>
+  </data>
+  <data name="Error_AFVFC_1" xml:space="preserve">
+    <value>No se ha asignado la cartera de fondo de fondos.</value>
+    <comment>Mensaje AsignacionFondosValidaFondosCerrados Vista (Aceptar)</comment>
+  </data>
+  <data name="Error_AFVFC_2" xml:space="preserve">
+    <value>No se realizó la asignación de fondos del día. NO es necesario restaurar la base de datos</value>
+    <comment>Mensaje AsignacionFondosValidaFondosCerrados Vista (Aceptar)</comment>
+  </data>
+  <data name="Error_AF_Controller" xml:space="preserve">
+    <value>No se realizó la asignación de fondos de clientes</value>
+    <comment>Menaje  AsignacionFondos</comment>
+  </data>
+  <data name="Error_A_Controller" xml:space="preserve">
+    <value>No se pudo actualizar la tabla de control de asignación</value>
+    <comment>Mensaje Agregar</comment>
+  </data>
+  <data name="Error_DFFC_Controller" xml:space="preserve">
+    <value>No fue posible determinar si existen Fondos de Fondos con cartera compuesta</value>
+    <comment>Mensaje DeterminaFondoFondosCompuesto</comment>
+  </data>
+  <data name="Error_Existencia_Fondos" xml:space="preserve">
+    <value>No existen Fondos de Fondos, no procede la asignación.</value>
+    <comment>Mensaje EjecutaAsignacionCartera Vista</comment>
+  </data>
+  <data name="Error_No_Val" xml:space="preserve">
+    <value>Opción no valida</value>
+  </data>
+  <data name="Error_OEF" xml:space="preserve">
+    <value>No se pudo determinar si existen fondos de fondos, no se puede ejecutar la asignación.</value>
+    <comment>Mensaje ObtieneExisteciaFondos Vista</comment>
+  </data>
+  <data name="Error_RCC_Controller" xml:space="preserve">
+    <value>No se realizó la reasignación de ordenes del contrato de cuadre</value>
+    <comment>Mensaje ReasignaContCuadre</comment>
+  </data>
+  <data name="Error_VAAC_Controller" xml:space="preserve">
+    <value>Existen diferencias entre las acciones en circulación del SIIF con el sistema Contable</value>
+    <comment>Mensaje VerificaAccionesCirculacion</comment>
+  </data>
+  <data name="Error_VAAE" xml:space="preserve">
+    <value>No se realizó la asignación de fondos de clientes, se sugiere cancelar las ordenes de clientes que exceden las acciones emitidas de los fondos. NO es necesario restaurar la base de datos</value>
+    <comment>Mensaje ValidaAsignacionVsAccionesEmitidas Vista (Aceptar)</comment>
+  </data>
+  <data name="Error_VACFCPP_1_Controller" xml:space="preserve">
+    <value>No fue posible determinar si existen precios previos para ejecutar la asignación de Fondo de Fondos Compuesta</value>
+    <comment>Mensaje ValidaAsignacionCarteraFondosCompuestoPreciosPrevios</comment>
+  </data>
+  <data name="Error_VACFCPP_2_Controller" xml:space="preserve">
+    <value>No existen precios previos para ejecutar la asignación de Fondo de Fondos Compuesta</value>
+    <comment>Mensaje EjecutaAsignacionCarteraFondosCompuesta</comment>
+  </data>
+  <data name="Error_VACFC_1_Controller" xml:space="preserve">
+    <value>No fué posible determinar si ya fué ejecutada la Asignación de Cartera de Fondo de Fondos Compuesta, no se ejecutó la asignación.</value>
+    <comment>Mensaje ValidaAsignacionCarteraFondos</comment>
+  </data>
+  <data name="Error_VACFC_2_Controller" xml:space="preserve">
+    <value>Ya se realizó la asignación de cartera de fondo de fondos Compuesta en este día, no puede ser ejecutada dos veces el mismo día.</value>
+    <comment>Mensaje EjecutaAsignacionCarteraFondosCompuesta</comment>
+  </data>
+  <data name="Error_VACFC_3" xml:space="preserve">
+    <value>Ya se realizó la asignación de fondos en este día, no puede ser ejecutada dos veces el mismo día.</value>
+    <comment>Mensaje ValidacionPreviaAsignacion</comment>
+  </data>
+  <data name="Error_VACFC_4_Controller" xml:space="preserve">
+    <value>No fué posible determinar si ya fué ejecutada la Asignación de Fondos, no se ejecuto la asignación.</value>
+    <comment>Mensaje ValidaAsignacionCarteraFondos</comment>
+  </data>
+  <data name="Error_VACFPP_1_Controller" xml:space="preserve">
+    <value>No fue posible determinar si existen precios previos para ejecutar la asignación de Fondo de Fondos</value>
+    <comment>Mensaje ValidaAsignacionCarteraFondosPreciosPrevios</comment>
+  </data>
+  <data name="Error_VACFPP_2_Controller" xml:space="preserve">
+    <value>No existen precios previos para ejecutar la asignación de Fondo de Fondos</value>
+    <comment>Mensaje EjecutaAsignacionCarteraFondoFondos</comment>
+  </data>
+  <data name="Error_VACF_1_Controller" xml:space="preserve">
+    <value>No fué posible determinar si ya fué ejecutada la Asignación de Cartera de Fondo de Fondos, no se ejecutó la asignación.</value>
+    <comment>Mensaje ValidaAsignacionCarteraFondos</comment>
+  </data>
+  <data name="Error_VACF_2_Controller" xml:space="preserve">
+    <value>Ya se realizó la asignación de cartera de fondo de fondos en este día, no puede ser ejecutada dos veces el mismo día.</value>
+    <comment>Mensaje EjecutaAsignacionCarteraFondoFondos</comment>
+  </data>
+  <data name="Error_VAEFF_Controller" xml:space="preserve">
+    <value>No se pudo determinar si existen fondos de fondos, no se puede ejecutar la asignación.</value>
+    <comment>Mensaje ValidaAsignacionExistenciaFondosDeFondos Controller</comment>
+  </data>
+  <data name="Error_VAOP_Controller" xml:space="preserve">
+    <value>No se asignaron todas las ordenes</value>
+    <comment>Mensaje ValidaAsignacionOrdenesPendientes</comment>
+  </data>
+  <data name="Error_VAVAC_Controller" xml:space="preserve">
+    <value>No fue posible verificar la asignación de cartera de fondo de fondos.</value>
+    <comment>Mensaje ValidaAsignacionVerificAsignCartera</comment>
+  </data>
+  <data name="Error_VAvsAE_Controller" xml:space="preserve">
+    <value>No se pudo determinar la verificación de acciones emitidas vs. circulación</value>
+    <comment>Mensaje ValidaAsignacionVsAccionesEmitidas</comment>
+  </data>
+  <data name="Error_VPACV_Controller" xml:space="preserve">
+    <value>No se han cargado los precios de los siguientes papeles:</value>
+    <comment>Mensaje ValidacionPreviaAsignacionCargaVector</comment>
+  </data>
+  <data name="Error_VPAFPV" xml:space="preserve">
+    <value>Debe valuar los fondos propios antes de asignar</value>
+    <comment>Mensaje ValidacionPreviaAsignacion</comment>
+  </data>
+  <data name="Error_VPAFPV_2_Controller" xml:space="preserve">
+    <value>Error al validar que los fondos propios ya hayan sido valuados</value>
+    <comment>Mensaje ValidacionPreviaAsignacionFonPropVal</comment>
+  </data>
+  <data name="Error_VPAOPAA1" xml:space="preserve">
+    <value>Existen órdenes pendientes de autorizar en el módulo de auditoría (1)</value>
+    <comment>Mensaje ValidacionPreviaAsignacion</comment>
+  </data>
+  <data name="Error_VPAOPAA1_Controller" xml:space="preserve">
+    <value>No fue posible verificar órdenes pendientes de autorizar del módulo de auditoría (1)</value>
+    <comment>Mensaje ValidacionPreviaAsignacionOrdPendAutAudit1</comment>
+  </data>
+  <data name="Error_VPAOPAA2" xml:space="preserve">
+    <value>Existen órdenes pendientes de autorizar en el módulo de auditoría (2)</value>
+    <comment>Mensaje ValidacionPreviaAsignacion</comment>
+  </data>
+  <data name="Error_VPAOPAA2_Controller" xml:space="preserve">
+    <value>No fue posible verificar órdenes pendientes de autorizar del módulo de auditoría (2)</value>
+    <comment>Mensaje ValidacionPreviaAsignacionOrdPendAutAudit2</comment>
+  </data>
+  <data name="Error_VPAPD_1_Controller" xml:space="preserve">
+    <value>No se han capturado los precios en la fecha: |</value>
+    <comment>Mensaje ValidacionPreviaAsignacionPreciosDia</comment>
+  </data>
+  <data name="Error_VPAPD_2_Controller" xml:space="preserve">
+    <value>| de los siguientes fondos:</value>
+    <comment>Mensaje ValidacionPreviaAsignacionPreciosDia</comment>
+  </data>
+  <data name="Error_VPATCS_Controller" xml:space="preserve">
+    <value>Falta capturar el tipo de cambio spot para: </value>
+    <comment>Mensaje ValidacionPreviaAsignacionTipoCambioSpot</comment>
+  </data>
+  <data name="Errror_AFVFC_Controller_1" xml:space="preserve">
+    <value>No se pudo validar si ya cerraron los fondos intente nuevamente realizar la asignación</value>
+    <comment>Mensaje AsignacionFondosValidaFondosCerrados Controller</comment>
+  </data>
+  <data name="Errror_AFVFC_Controller_2" xml:space="preserve">
+    <value>No se ha realizado el cierre de fondos para operación, no se puede ejecutar la asignación</value>
+    <comment>Mensaje AsignacionFondosValidaFondosCerrados Controller</comment>
+  </data>
+  <data name="Exitoso" xml:space="preserve">
+    <value>El proceso se realizó con éxito.</value>
+    <comment>Mensaje Vista (Aceptar)</comment>
+  </data>
+  <data name="Fecha_Operacion" xml:space="preserve">
+    <value>Fecha</value>
+    <comment>Parametro</comment>
+  </data>
+  <data name="Fondos" xml:space="preserve">
+    <value>Fondos</value>
+    <comment>Valor CheckBox</comment>
+  </data>
+  <data name="Fondos_Compuesta" xml:space="preserve">
+    <value>Asignar cartera de fondo de fondos compuesta</value>
+    <comment>Parametro</comment>
+  </data>
+  <data name="Fondos_Fondos" xml:space="preserve">
+    <value>Asignar cartera de fondo de fondos</value>
+    <comment>Parametro</comment>
+  </data>
+  <data name="Fondos_Propios" xml:space="preserve">
+    <value>Asignar solo fondos propios</value>
+    <comment>Parametro</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+    <comment>Boton PopUp</comment>
+  </data>
+  <data name="Proceso" xml:space="preserve">
+    <value>¿Confirma proceso?</value>
+    <comment>PopUp</comment>
+  </data>
+  <data name="Propios" xml:space="preserve">
+    <value>Propios</value>
+    <comment>Valor CheckBox</comment>
+  </data>
+  <data name="Si" xml:space="preserve">
+    <value>Sí</value>
+    <comment>Boton PopUp</comment>
+  </data>
+  <data name="Success_EACFC" xml:space="preserve">
+    <value>La asignación de la cartera de los fondos de fondos compuesta se ha ejecutado satisfactoriamente</value>
+    <comment>Mensaje EjecutaAsignacionCarteraFondosCompuesta</comment>
+  </data>
+  <data name="Success_EACFF" xml:space="preserve">
+    <value>La asignación de la cartera de los fondos de fondos se ha ejecutado satisfactoriamente</value>
+    <comment>Mensaje EjecutaAsignacionCarteraFondoFondos</comment>
+  </data>
+</root>

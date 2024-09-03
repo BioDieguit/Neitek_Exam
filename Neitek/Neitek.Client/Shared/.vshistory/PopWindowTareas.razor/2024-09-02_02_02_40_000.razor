@@ -1,0 +1,125 @@
+﻿<style>
+    .bold {
+        font-weight: bold;
+    }
+
+</style>
+
+<DxPopup @bind-Visible="@IsVisiblePopUp"
+         HeaderText=@Titulo
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         ShowFooter="true"
+         ShowCloseButton="true"
+         Closed="OnClosed"
+         Id="@PopId"
+         Width="450">
+    <BodyTemplate>
+        <div class="d-flex flex-fill pt-1 pb-2">
+            @switch (PopId)
+            {
+                case "Registrar" or "Modificar":
+                    <DxFormLayout CssClass="w-100 p-2">
+                        <DxFormLayoutItem Caption="Nombre: " ColSpanXl="12" ColSpanLg="12" ColSpanMd="12" ColSpanSm="12" ColSpanXs="12" Context="EditFormMinContext">
+                            <DxTextBox @bind-Text="@TextoAccionPop"
+                                       maxlength="80" />
+                        </DxFormLayoutItem>
+                    </DxFormLayout>
+                    break;
+                case "Eliminar":
+                    <p class="m-3"> Que desea elimina el elemento: <span class="bold"> @TextoAccionPop </span></p>
+                    break;
+            }
+        </div>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        @switch (PopId)
+        {
+            case "Registrar":
+                <DxButton Text="Aceptar"
+                          Click="EnviarTareaRegistrar"
+                          RenderStyle="ButtonRenderStyle.Primary" />
+                break;
+            case "Eliminar":
+                <DxButton Text="Aceptar"
+                          Click="EnviarTareaEliminar"
+                          RenderStyle="ButtonRenderStyle.Primary" />
+                break;
+            case "Modificar":
+                <DxButton Text="Aceptar"
+                          Click="EnviarTareaModificar"
+                          RenderStyle="ButtonRenderStyle.Primary" />
+                break;
+        }
+
+        <DxButton Click="CerraVentana"
+                  Text="Cancelar"
+                  RenderStyle="ButtonRenderStyle.Secondary" />
+    </FooterContentTemplate>
+</DxPopup>
+
+@code {
+    #region .:| Variables Registrar Meta|:.
+    [Parameter]
+    public EventCallback<string> RegistrarNuevaTarea { get; set; }
+    #endregion
+
+    #region .:| Variables Eliminar Meta|:.
+    [Parameter]
+    public EventCallback<short> EliminarTarea { get; set; }
+    #endregion
+
+    #region .:| Variables Modificar Meta|:.
+    [Parameter]
+    public EventCallback<string> ModificarTarea { get; set; }
+    #endregion
+
+    [Parameter]
+    public EventCallback CerraVentana { get; set; }
+    [Parameter]
+    public bool IsVisiblePopUp { get; set; } = false;
+    [Parameter]
+    public string PopId { get; set; }
+    [Parameter]
+    public string Titulo { get; set; }
+    [Parameter]
+    public string Mensaje { get; set; }
+    [Parameter]
+    public string TextoAccionPop { get; set; }
+    [Parameter]
+    public EventCallback<PopupClosedEventArgs> OnClosed { get; set; }
+
+
+    #region .:| Evento Registrar Meta|:.
+    protected async Task EnviarTareaRegistrar()
+    {
+        await RegistrarNuevaTarea.InvokeAsync(TextoAccionPop);
+    }
+    #endregion
+
+    #region .:| Evento Eliminar Meta|:.
+    protected async Task EnviarTareaEliminar()
+    {
+        await EliminarTarea.InvokeAsync();
+    }
+    #endregion
+
+    #region .:| Evento Modificar Meta|:.
+    protected async Task EnviarTareaModificar()
+    {
+        await ModificarTarea.InvokeAsync(TextoAccionPop);
+    }
+    #endregion
+
+
+    // protected async Task OnKeyUp(KeyboardEventArgs  e) {
+    //     if (e.Key == "Escape")
+    //     {
+    //         await CerraVentana.InvokeAsync();
+    //     }
+    //     if (e.Key == "Enter")
+    //     {
+    //         await OnClickBotonAceptar.InvokeAsync();
+    //     }
+    //}
+}

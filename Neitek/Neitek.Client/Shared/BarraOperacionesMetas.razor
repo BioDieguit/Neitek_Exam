@@ -1,0 +1,30 @@
+﻿<DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain"
+           AdaptivityMinRootItemCount="2"
+           AdaptivityAutoHideRootItems="true"
+           AdaptivityAutoCollapseItemsToIcons="true"
+           CssClass="bg-light">
+    <TitleTemplate>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </TitleTemplate>
+    <Items>
+        <div class="margin-left">
+            <DxToolbarItem CssClass="bg-light"  Visible="true" Name="Modificar" IconCssClass="fa fa-pencil" Tooltip="Modificar" AdaptiveText="Modificar" Click="EnviarMetaModificar" />
+            <DxToolbarItem CssClass="bg-light"  Visible="true" Name="Eliminar" IconCssClass="fa fa-trash" Tooltip="Eliminar" style="color:black;" Text="Eliminar" AdaptiveText="Eliminar" Click="EnviarMetaEliminar"></DxToolbarItem>
+        </div>
+       
+    </Items>
+</DxToolbar>
+@code {
+    [Parameter]
+    public EventCallback<string> AccionMeta { get; set; }
+
+    protected async Task EnviarMetaEliminar()
+    {
+        await AccionMeta.InvokeAsync("Eliminar");
+    }
+
+    protected async Task EnviarMetaModificar()
+    {
+        await AccionMeta.InvokeAsync("Modificar");
+    }
+}

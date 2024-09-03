@@ -1,0 +1,85 @@
+﻿<style>
+    .TamañoBarraOperacionTareas {
+        width: 1000px;
+    }
+</style>
+
+<div class="d-flex TamañoBarraOperacionTareas">
+    <DxFormLayoutGroup ColSpanXl="12" ColSpanLg="12" ColSpanMd="12" ColSpanSm="12" ColSpanXs="12" Decoration="FormLayoutGroupDecoration.None">
+        <DxFormLayoutItem ColSpanXl="2" ColSpanLg="4" ColSpanMd="4" ColSpanSm="4" ColSpanXs="4">
+            <DxButton Text="Agregar Tareas"
+                      Click="EnviarTareaAgregar"
+                      RenderStyle="ButtonRenderStyle.Info"
+                      CssClass="btn-icon-like"
+                      IconCssClass="fa fa-plus"
+                      Visible="@VisibleRegistrar">
+            </DxButton>
+        </DxFormLayoutItem>
+        <DxFormLayoutItem ColSpanXl="2" ColSpanLg="4" ColSpanMd="4" ColSpanSm="4" ColSpanXs="4">
+            <DxButton Text="Completar Tarea"
+                      Click="EnviarTareaCompletar"
+                      RenderStyle="ButtonRenderStyle.Info"
+                      CssClass="btn-icon-like"
+                      IconCssClass="fa-solid fa-circle-check"
+                      Visible="@VisibleCompletar"
+                      Enabled="@EnabledCompletar">
+            </DxButton>
+        </DxFormLayoutItem>
+        <DxFormLayoutItem ColSpanXl="1" ColSpanLg="4" ColSpanMd="4" ColSpanSm="4" ColSpanXs="4">
+            <DxButton Text="Editar"
+                      Click="EnviarTareaModificar"
+                      RenderStyle="ButtonRenderStyle.Info"
+                      CssClass="btn-icon-like"
+                      IconCssClass="fa fa-pencil"
+                      Visible="@VisibleModificar">
+            </DxButton>
+        </DxFormLayoutItem>
+        <DxFormLayoutItem ColSpanXl="1" ColSpanLg="4" ColSpanMd="4" ColSpanSm="4" ColSpanXs="4">
+            <DxButton Text="Eliminar"
+                      Click="EnviarTareaEliminar"
+                      RenderStyle="ButtonRenderStyle.Info"
+                      CssClass="btn-icon-like"
+                      IconCssClass="fa fa-trash"
+                      Visible="@VisibleEliminar">
+            </DxButton>
+        </DxFormLayoutItem>  
+    </DxFormLayoutGroup>
+</div>
+
+
+@code {
+    [Parameter]
+    public bool VisibleRegistrar { get; set; }
+    [Parameter]
+    public bool VisibleModificar { get; set; }
+    [Parameter]
+    public bool VisibleEliminar { get; set; }
+    [Parameter]
+    public bool VisibleCompletar { get; set; }
+    [Parameter]
+    public bool EnabledCompletar { get; set; }
+
+
+    [Parameter]
+    public EventCallback<string> AccionTarea { get; set; }
+
+    protected async Task EnviarTareaAgregar()
+    {
+        await AccionTarea.InvokeAsync("Registrar");
+    }
+
+    protected async Task EnviarTareaCompletar()
+    {
+        await AccionTarea.InvokeAsync("Completar");
+    }
+
+    protected async Task EnviarTareaModificar()
+    {
+        await AccionTarea.InvokeAsync("Modificar");
+    }
+
+    protected async Task EnviarTareaEliminar()
+    {
+        await AccionTarea.InvokeAsync("Eliminar");
+    }   
+}

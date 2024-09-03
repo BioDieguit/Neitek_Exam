@@ -1,0 +1,33 @@
+﻿
+.btn-icon-like {
+    background-color: seagreen;
+    color: white;
+    font-size: 15px;
+}
+
+.TamañoAdicion {
+    width: 400px;
+}
+
+.TamañoGrilla {
+    margin-left: 20px;
+    width: 1200px;
+}
+
+.TamañoLetra {
+    font-size: small;
+}
+
+.WrapText {
+    border: none;
+    word-wrap: break-word;
+}
+
+.header-align-center span:first-child {
+    width: 100%;
+    text-align: center;
+}
+
+#HoverDiv:hover, #HoverDiv:focus {
+    background-color: lightgray;
+}
